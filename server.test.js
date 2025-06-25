@@ -23,6 +23,22 @@ describe('API Endpoints', () => {
     expect(response.body.params.param).toBe('value');
   });
 
+  test('GET /api/users should return user list', async () => {
+    const response = await request(app).get('/api/users');
+    expect(response.status).toBe(200);
+    expect(response.body.users).toHaveLength(3);
+    expect(response.body.total).toBe(3);
+    expect(response.body.filtered).toBe(false);
+  });
+
+  test('GET /api/users?role=admin should filter users', async () => {
+    const response = await request(app).get('/api/users?role=admin');
+    expect(response.status).toBe(200);
+    expect(response.body.users).toHaveLength(1);
+    expect(response.body.users[0].name).toBe('Alice');
+    expect(response.body.filtered).toBe(true);
+  });
+
   test('GET /nonexistent should return 404', async () => {
     const response = await request(app).get('/nonexistent');
     expect(response.status).toBe(404);

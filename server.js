@@ -27,6 +27,23 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+app.get('/api/users', (req, res) => {
+  const users = [
+    { id: 1, name: 'Alice', role: 'admin' },
+    { id: 2, name: 'Bob', role: 'user' },
+    { id: 3, name: 'Charlie', role: 'user' }
+  ];
+  
+  const { role } = req.query;
+  const filteredUsers = role ? users.filter(u => u.role === role) : users;
+  
+  res.json({
+    users: filteredUsers,
+    total: filteredUsers.length,
+    filtered: !!role
+  });
+});
+
 app.get('/api/test', (req, res) => {
   res.json({
     message: 'Test endpoint working',

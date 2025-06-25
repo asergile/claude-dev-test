@@ -25,6 +25,7 @@ npm test
 
 - `GET /` - Server info
 - `GET /api/health` - Health check
+- `GET /api/users` - User list (supports `?role=admin|user` filter)
 - `GET /api/test` - Test endpoint
 
 ## Environment
